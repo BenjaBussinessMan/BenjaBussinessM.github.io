@@ -2,47 +2,45 @@
 
 const projects = [
   {
-    title: "Dashboard de ventas",
-    description: "Panel interactivo con indicadores de ventas, márgenes y cumplimiento de metas por región.",
-    tags: ["Power BI", "SQL", "DAX"],
-    demo: "#",
-    repo: "#",
+    title: "End-to-End Enterprise Data Lakehouse & Governance",
+    tags: ["PySpark", "Databricks", "Delta Lake", "Unity Catalog", "Power BI"],
+    problem: "Fragmentación de datos transaccionales en sistemas aislados, sin control de accesos ni calidad centralizada.",
+    solution: [
+      "Arquitectura Medallion (Bronze, Silver, Gold) en Databricks para procesar más de 1M de registros diarios.",
+      "Gobernanza con Unity Catalog: control de acceso basado en roles (RBAC) y linaje de datos.",
+      "Optimización de consultas analíticas con una reducción del 40% en los tiempos de ejecución.",
+    ],
+    deliverables: "Scripts de PySpark, diagramas de arquitectura (Mermaid.js) y tablero ejecutivo en Power BI.",
+    repo: "https://github.com/BenjaBussinessMan/end-to-end-pipeline_example5",
   },
   {
-    title: "Modelo de predicción de demanda",
-    description: "Pronóstico mensual de demanda con series de tiempo para optimizar inventarios.",
-    tags: ["Python", "pandas", "scikit-learn"],
-    demo: "#",
-    repo: "#",
-  },
-  {
-    title: "Automatización de reportes",
-    description: "Pipeline que consolida fuentes, valida calidad de datos y distribuye reportes cada semana.",
-    tags: ["Python", "SQL", "Excel"],
-    demo: "",
-    repo: "#",
+    title: "Real-Time Streaming Pipeline & Fraud Detection API",
+    tags: ["Python", "Apache Kafka", "FastAPI", "Docker", "PostgreSQL"],
+    problem: "Detectar transacciones anómalas en tiempo real antes de que impacten el balance financiero.",
+    solution: [
+      "Pipeline de ingesta en tiempo real con Kafka y consumidores en Python.",
+      "API de inferencia ligera con FastAPI, contenedorizada en Docker.",
+      "Despliegue del entorno automatizado con docker-compose.",
+    ],
+    deliverables: "Código de la API, Dockerfile optimizado (multi-stage build) y pruebas unitarias con Pytest.",
+    repo: "hhttps://github.com/BenjaBussinessMan/pipeline-mode-fraud-detection",
   },
 ];
 
 const skills = {
-  "Análisis y BI": ["Power BI", "Excel avanzado", "DAX", "Tableau"],
-  "Programación": ["SQL", "Python", "pandas", "Git"],
-  "Datos": ["Modelado dimensional", "ETL", "Calidad de datos", "Estadística"],
+  "Lenguajes": ["Python", "SQL", "PySpark"],
+  "Procesamiento y Big Data": ["Apache Spark", "Databricks", "Delta Lake", "FastAPI"],
+  "Orquestación y CI/CD": ["Apache Airflow", "GitHub Actions", "Docker","Azure DataFactory"],
+  "Bases de datos y almacenamiento": ["SQL Server","PostgreSQL", "Snowflake", "Azure Blob"],
+  "Gobernanza y calidad": ["Unity Catalog", "Data Lineage"],
+  "Visualización y BI": ["Power BI", "Streamlit","Dash"],
 };
 
-const experience = [
-  {
-    role: "Analista de datos",
-    company: "Empresa o institución",
-    period: "2023 - Actualidad",
-    summary: "Describe en una línea tu impacto principal, idealmente con un número.",
-  },
-  {
-    role: "Practicante de analítica",
-    company: "Empresa o institución",
-    period: "2022 - 2023",
-    summary: "Describe qué construiste o mejoraste.",
-  },
+const education = [
+  { title: "Master en Inteligencia Artificial", org: "UNIR", kind: "Posgrado" },
+  { title: "Ingeniería en Ciencias Económicas y Financieras", org: "Escuela Politécnica Nacional", kind: "Grado" },
+  { title: "Data Governance Accredited", org: "Databricks", kind: "Certificación" },
+  { title: "Scrum Fundamentals Certified (SFC)", org: "SCRUMstudy", kind: "Certificación" },
 ];
 
 function el(tag, props = {}, children = []) {
@@ -51,18 +49,22 @@ function el(tag, props = {}, children = []) {
   return node;
 }
 
+function detail(label, content) {
+  return el("div", { className: "detail" }, [el("h4", { textContent: label }), content]);
+}
+
 function renderProjects() {
   const root = document.getElementById("project-list");
   projects.forEach((p) => {
     const links = el("div", { className: "links" });
-    if (p.demo) links.append(el("a", { href: p.demo, textContent: "Demo", target: "_blank", rel: "noopener" }));
-    if (p.repo) links.append(el("a", { href: p.repo, textContent: "Código", target: "_blank", rel: "noopener" }));
-    const tags = el("ul", { className: "tags" }, p.tags.map((t) => el("li", { textContent: t })));
+    if (p.repo) links.append(el("a", { href: p.repo, textContent: "Ver repositorio", target: "_blank", rel: "noopener" }));
     root.append(
       el("article", { className: "card" }, [
         el("h3", { textContent: p.title }),
-        el("p", { textContent: p.description }),
-        tags,
+        el("ul", { className: "tags" }, p.tags.map((t) => el("li", { textContent: t }))),
+        detail("Problema", el("p", { textContent: p.problem })),
+        detail("Solución", el("ul", {}, p.solution.map((x) => el("li", { textContent: x })))),
+        detail("Entregables", el("p", { textContent: p.deliverables })),
         links,
       ])
     );
@@ -81,14 +83,14 @@ function renderSkills() {
   });
 }
 
-function renderExperience() {
-  const root = document.getElementById("timeline");
-  experience.forEach((e) => {
+function renderEducation() {
+  const root = document.getElementById("education");
+  education.forEach((e) => {
     root.append(
       el("li", {}, [
-        el("h3", { textContent: e.role }),
-        el("p", { className: "meta", textContent: `${e.company} · ${e.period}` }),
-        el("p", { textContent: e.summary }),
+        el("span", { className: "kind", textContent: e.kind }),
+        el("h3", { textContent: e.title }),
+        el("p", { textContent: e.org }),
       ])
     );
   });
@@ -107,6 +109,6 @@ function setupTheme() {
 
 renderProjects();
 renderSkills();
-renderExperience();
+renderEducation();
 setupTheme();
 document.getElementById("year").textContent = new Date().getFullYear();
