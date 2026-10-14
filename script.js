@@ -23,7 +23,7 @@ const projects = [
       "Despliegue del entorno automatizado con docker-compose.",
     ],
     deliverables: "Código de la API, Dockerfile optimizado (multi-stage build) y pruebas unitarias con Pytest.",
-    repo: "hhttps://github.com/BenjaBussinessMan/pipeline-mode-fraud-detection",
+    repo: "https://github.com/BenjaBussinessMan/pipeline-mode-fraud-detection",
   },
   {
   title: "Insurance Premium Prediction & Actuarial Pricing Analysis",
