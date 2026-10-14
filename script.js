@@ -25,6 +25,19 @@ const projects = [
     deliverables: "Código de la API, Dockerfile optimizado (multi-stage build) y pruebas unitarias con Pytest.",
     repo: "hhttps://github.com/BenjaBussinessMan/pipeline-mode-fraud-detection",
   },
+  {
+  title: "Insurance Premium Prediction & Actuarial Pricing Analysis",
+  tags: ["Python", "scikit-learn", "LightGBM", "XGBoost", "Actuarial Science", "Jupyter"],
+  problem: "Predecir la prima de seguro de cada cliente y comprobar si el modelo con mejor error también sirve para fijar precios: que la tarifa cuadre, ordene bien los riesgos y no provoque selección adversa.",
+  solution: [
+    "Exploración y preprocesamiento de 1,2 M de pólizas (nulos informativos, fechas, transformaciones) con pipelines que evitan fuga de datos.",
+    "Comparación con validación cruzada de modelos lineales, LightGBM, XGBoost y un ensamble ponderado (RMSLE 1,0969 del baseline a 1,0484).",
+    "Aplicación de teoría actuarial: credibilidad de Bühlmann, bonus-malus, GLM Gamma, boosting Tweedie, corrección de Duan, Gini, lift y doble lift.",
+    "Hallazgo clave: el ensamble con mejor RMSLE cubría solo el 68,5 % de lo esperado cobrar y ordenaba peor el riesgo (Gini 0,05 frente a ~0,19 del boosting Gamma/Tweedie).",
+  ],
+  deliverables: "Notebook reproducible con todo el análisis, README que explica cada decisión y su base actuarial, y dos archivos de envío (uno para RMSLE y otro con la prima equilibrada). Datos de Kaggle, usados como ejemplo.",
+  repo: "https://github.com/BenjaBussinessMan/insurance-cost-prediction-example3",
+  },
 ];
 
 const skills = {
