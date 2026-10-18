@@ -41,7 +41,7 @@ const projects = [
   {
     title: "Customer Segmentation & Profiling App (Streamlit + Docker)",
     tags: ["Python", "Streamlit", "Plotly", "pandas", "Polars", "Docker", "Render", "Gemini"],
-    problem: "Un análisis de perfilamiento de clientes de una red de concesionarios automotrices quedaba en un notebook: sin forma de explorarlo, reproducirlo ni compartirlo con el negocio.",
+    problem: "Un análisis de perfilamiento de clientes de una red de concesionarios automotrices diseñado para ser mostrado mediante una app analitica. El objetivo es mostrar como ir más alla de solo explorarlo en un notebook, sino reproducirlo y compartirlo con el negocio.",
     solution: [
       "Dashboard en Streamlit con filtros globales y pestañas de análisis: sociodemográfico, conductual, buyer persona, económico, producto, geografía, clientes con RUC y contactabilidad.",
       "Segmentación por variables derivadas (nivel de riesgo, generación, región y tipo de localidad, tipo de persona) y gráficos Plotly con Sankey y mapa coroplético.",
