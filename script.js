@@ -38,6 +38,21 @@ const projects = [
   deliverables: "Notebook reproducible con todo el análisis, README que explica cada decisión y su base actuarial, y dos archivos de envío (uno para RMSLE y otro con la prima equilibrada). Datos de Kaggle, usados como ejemplo.",
   repo: "https://github.com/BenjaBussinessMan/insurance-cost-prediction-example3",
   },
+  {
+    title: "Customer Segmentation & Profiling App (Streamlit + Docker)",
+    tags: ["Python", "Streamlit", "Plotly", "pandas", "Polars", "Docker", "Render", "Gemini"],
+    problem: "Un análisis de perfilamiento de clientes de una red de concesionarios automotrices quedaba en un notebook: sin forma de explorarlo, reproducirlo ni compartirlo con el negocio.",
+    solution: [
+      "Dashboard en Streamlit con filtros globales y pestañas de análisis: sociodemográfico, conductual, buyer persona, económico, producto, geografía, clientes con RUC y contactabilidad.",
+      "Segmentación por variables derivadas (nivel de riesgo, generación, región y tipo de localidad, tipo de persona) y gráficos Plotly con Sankey y mapa coroplético.",
+      "Ficha de buyer persona redactada con IA generativa (Gemini con modelos de respaldo y Groq) sobre estadísticas ya calculadas, con caché en disco.",
+      "Datos anonimizados (hash SHA-1 determinista, contactos enmascarados) y lógica compartida en un paquete instalable.",
+      "Guía de dockerización: build multi-stage sobre python:3.12-slim, datos horneados en la imagen, docker-compose para desarrollo y despliegue en Render desde Docker Hub.",
+    ],
+    deliverables: "App en producción, repositorio con Dockerfile y docker-compose, script de conversión de datos a Parquet y README del proceso de empaquetado y despliegue.",
+    demo: "https://analityc-app-segmentation5.onrender.com/",
+    repo: "https://github.com/BenjaBussinessMan/analityc-app-segmentation5",
+  },
 ];
 
 const skills = {
@@ -70,6 +85,7 @@ function renderProjects() {
   const root = document.getElementById("project-list");
   projects.forEach((p) => {
     const links = el("div", { className: "links" });
+    if (p.demo) links.append(el("a", { href: p.demo, textContent: "Ver app en vivo", target: "_blank", rel: "noopener" }));
     if (p.repo) links.append(el("a", { href: p.repo, textContent: "Ver repositorio", target: "_blank", rel: "noopener" }));
     root.append(
       el("article", { className: "card" }, [
