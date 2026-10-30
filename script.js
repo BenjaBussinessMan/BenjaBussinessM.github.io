@@ -14,7 +14,7 @@ const ui = {
     "theme.toggle": "Cambiar tema",
     "hero.eyebrow": "Data Science and Data Engineering & AI Specialist · Quito, Ecuador",
     "hero.title": "Soluciones de datos que generan valor de negocio.",
-    "hero.lead": "Especialista en Ingeniería de Datos e Inteligencia Artificial con más de 4 años de experiencia en el diseño, construcción y optimización de arquitecturas de datos en la nube. Experto en procesamiento distribuido (PySpark, Databricks), automatización de pipelines (ETL/ELT), gobernanza de datos y despliegue de soluciones MLOps en entornos de producción masivos.",
+    "hero.lead": "Especialista en Ciencia e Ingeniería de Datos con enfoque en Inteligencia Artificial con más de 4 años de experiencia en el diseño, construcción y optimización de arquitecturas de datos en la nube. Experto en procesamiento distribuido (PySpark, Databricks), automatización de pipelines (ETL/ELT), gobernanza de datos y despliegue de soluciones MLOps en entornos de producción masivos.",
     "hero.cta.projects": "Ver proyectos",
     "hero.cta.contact": "Contactarme",
     "stats.years": "Años de experiencia",
@@ -69,6 +69,42 @@ const ui = {
 };
 
 const projects = [
+  {
+    title: {
+      es: "Grounded Analytics Assistant: RAG híbrido y text-to-SQL",
+      en: "Grounded Analytics Assistant: hybrid RAG and text-to-SQL",
+    },
+    tags: ["Python", "DuckDB", "Parquet", "RAG", "BGE-M3", "BM25", "Ollama", "FastAPI", "Streamlit", "pytest"],
+    problem: {
+      es: "El SRI publica un CSV por año con cada vehículo nuevo registrado y la AEADE boletines mensuales en PDF, pero usarlos es difícil: los 6 CSV no comparten esquema (codificación, encabezados, fechas, cantón como código o nombre), cada pregunta exige limpiar cientos de MB y escribir SQL, un chatbot común inventa cifras con seguridad, y el SRI y la AEADE reportan totales distintos.",
+      en: "The SRI publishes one CSV per year with every new vehicle registered, and AEADE publishes monthly PDF bulletins, but they are hard to use: the 6 CSVs share no schema (encoding, headers, dates, canton as code or name), every question requires cleaning hundreds of MB and writing SQL, a generic chatbot confidently invents figures, and SRI and AEADE report different totals.",
+    },
+    solution: {
+      es: [
+        "Asistente de IA que responde en español sobre el mercado de vehículos nuevos de Ecuador. Procesa 3,2 millones de registros del SRI y boletines de AEADE, y corre 100 % en local, sin costo y sin enviar datos a terceros.",
+        "Cada pregunta usa la herramienta adecuada: las cantidades exactas las calcula DuckDB con SQL escrito por el LLM; el contexto y el texto se resuelven con RAG de búsqueda híbrida (BM25 + embeddings BGE-M3 fusionados con RRF); lo que está fuera de alcance se rechaza en lugar de inventarse.",
+        "Ingesta robusta (reintentos, escritura atómica, huella SHA-256) y ETL a Parquet con un esquema único de 22 columnas: 3.246.030 filas en ~20 MB y un reporte de calidad por año.",
+        "Corpus de 1.335 documentos con cifras precalculadas por SQL, años incompletos marcados y lectura de los PDF de AEADE. La consulta se analiza para extraer año, mes, marca, provincia y combustible como señal de recuperación.",
+        "Text-to-SQL seguro: el SQL generado se trata como entrada no confiable (una sola sentencia SELECT, solo la tabla permitida, sin funciones de archivos ni del sistema). Un guardrail anti-alucinaciones exige que cada cifra aparezca en el fragmento citado; si no, reintenta una vez y luego rechaza.",
+        "Resultados medidos: recuperación híbrida con filtros hit@1 0,82 frente a 0,52 de BM25 solo; text-to-SQL 31/31 con modelo 7B y 26/31 con 3B; asistente completo 22/24 con 7B y 20/24 con 3B; 70 tests automáticos.",
+        "Evaluación honesta: documenté los resultados negativos (el reranker no justificó su costo y un peso adaptativo para BM25 no funcionó, así que retiré ese código) y las limitaciones del guardrail. La demo cubre 2025-2026 y tres clases de vehículo (automóvil, camión, camioneta); el ETL procesa los seis años.",
+      ],
+      en: [
+        "AI assistant that answers in Spanish about Ecuador's new vehicle market. It processes 3.2 million SRI records and AEADE bulletins, and runs 100% locally, at no cost and without sending data to third parties.",
+        "Each question gets the right tool: exact quantities are computed by DuckDB from SQL written by the LLM; context and text are handled with hybrid-search RAG (BM25 + BGE-M3 embeddings fused with RRF); anything out of scope is refused instead of invented.",
+        "Robust ingestion (retries, atomic writes, SHA-256 fingerprint) and an ETL to Parquet with a single 22-column schema: 3,246,030 rows in ~20 MB and a per-year quality report.",
+        "Corpus of 1,335 documents with SQL-precomputed figures, incomplete years flagged and AEADE PDF parsing. The query is analyzed to extract year, month, brand, province and fuel as a retrieval signal.",
+        "Secure text-to-SQL: generated SQL is treated as untrusted input (a single SELECT statement, only the allowed table, no file or system functions). An anti-hallucination guardrail requires every figure to appear in the cited passage; otherwise it retries once and then refuses.",
+        "Measured results: hybrid retrieval with filters hit@1 0.82 versus 0.52 for BM25 alone; text-to-SQL 31/31 with the 7B model and 26/31 with 3B; full assistant 22/24 with 7B and 20/24 with 3B; 70 automated tests.",
+        "Honest evaluation: I documented negative results (the reranker did not justify its cost and an adaptive BM25 weight did not work, so I removed that code) and the guardrail's limitations. The demo covers 2025-2026 and three vehicle classes (car, truck, pickup); the ETL processes all six years.",
+      ],
+    },
+    deliverables: {
+      es: "Pipeline de datos reproducible, dataset limpio en Parquet con diccionario de datos, sistema RAG (BM25 propio, BGE-M3, RRF, parser de consultas), agente text-to-SQL con validación de seguridad, API REST con FastAPI (7 endpoints), interfaz Streamlit con chat auditable (SQL y fuentes) y dashboard, suite de evaluación de 105 preguntas con informe automático, 70 tests y README didáctico con guía de replicación.",
+      en: "Reproducible data pipeline, clean Parquet dataset with data dictionary, RAG system (custom BM25, BGE-M3, RRF, query parser), text-to-SQL agent with security validation, FastAPI REST API (7 endpoints), Streamlit interface with an auditable chat (SQL and sources) and dashboard, a 105-question evaluation suite with an automatic report, 70 tests and a didactic README with a step-by-step replication guide.",
+    },
+    repo: "https://github.com/BenjaBussinessMan/rag-dashboard-app-automotive",
+  },
   {
     title: "End-to-End Enterprise Data Lakehouse & Governance",
     tags: ["PySpark", "Databricks", "Delta Lake", "Unity Catalog", "Power BI"],
@@ -224,7 +260,7 @@ function renderProjects() {
     if (p.repo) links.append(el("a", { href: p.repo, textContent: t("projects.repo"), target: "_blank", rel: "noopener" }));
     root.append(
       el("article", { className: "card" }, [
-        el("h3", { textContent: p.title }),
+        el("h3", { textContent: tr(p.title) }),
         el("ul", { className: "tags" }, p.tags.map((tag) => el("li", { textContent: tag }))),
         detail(t("projects.problem"), el("p", { textContent: tr(p.problem) })),
         detail(t("projects.solution"), el("ul", {}, tr(p.solution).map((x) => el("li", { textContent: x })))),
